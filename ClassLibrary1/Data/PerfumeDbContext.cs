@@ -18,11 +18,6 @@ namespace Infrustructure.Data
 
             // ----------- Set Configurations -----------
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
-            modelBuilder.Entity<Product>().UseTpcMappingStrategy();
-            modelBuilder.Entity<Parfume>().ToTable("Parfume");
-            modelBuilder.Entity<Care>().ToTable("Care");
-
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -36,6 +31,7 @@ namespace Infrustructure.Data
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Rating> Ratings { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<Product> Products { get; set; }
+        public DbSet<Care> Cares { get; set; }
+        public DbSet<Parfume> Parfumes { get; set; }
     }
 }

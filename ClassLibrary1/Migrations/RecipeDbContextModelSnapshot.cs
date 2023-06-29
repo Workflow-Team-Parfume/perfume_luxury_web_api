@@ -22,7 +22,20 @@ namespace infrustructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.HasSequence("ProductSequence");
+            modelBuilder.Entity("CareOrder", b =>
+                {
+                    b.Property<int>("CaresId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrdersId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CaresId", "OrdersId");
+
+                    b.HasIndex("OrdersId");
+
+                    b.ToTable("CareOrder");
+                });
 
             modelBuilder.Entity("Core.Entities.Amount", b =>
                 {
@@ -57,6 +70,47 @@ namespace infrustructure.Migrations
                     b.ToTable("Brands");
                 });
 
+            modelBuilder.Entity("Core.Entities.Care", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AmountId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BrandId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Img_Path")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("InStock")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AmountId");
+
+                    b.HasIndex("BrandId");
+
+                    b.ToTable("Cares");
+                });
+
             modelBuilder.Entity("Core.Entities.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -82,14 +136,13 @@ namespace infrustructure.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("Core.Entities.Product", b =>
+            modelBuilder.Entity("Core.Entities.Parfume", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValueSql("NEXT VALUE FOR [ProductSequence]");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseSequence(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("AmountId")
                         .HasColumnType("int");
@@ -98,7 +151,6 @@ namespace infrustructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Img_Path")
@@ -108,9 +160,18 @@ namespace infrustructure.Migrations
                     b.Property<bool>("InStock")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsBottling")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ParfumeLeftMl")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -118,9 +179,7 @@ namespace infrustructure.Migrations
 
                     b.HasIndex("BrandId");
 
-                    b.ToTable((string)null);
-
-                    b.UseTpcMappingStrategy();
+                    b.ToTable("Parfumes");
                 });
 
             modelBuilder.Entity("Core.Entities.Rating", b =>
@@ -131,7 +190,10 @@ namespace infrustructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ProductId")
+                    b.Property<int?>("CareId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ParfumeId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Rate")
@@ -143,7 +205,9 @@ namespace infrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("CareId");
+
+                    b.HasIndex("ParfumeId");
 
                     b.HasIndex("UserId");
 
@@ -348,45 +412,53 @@ namespace infrustructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("OrderProduct", b =>
+            modelBuilder.Entity("OrderParfume", b =>
                 {
                     b.Property<int>("OrdersId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductId")
+                    b.Property<int>("ParfumesId")
                         .HasColumnType("int");
 
-                    b.HasKey("OrdersId", "ProductId");
+                    b.HasKey("OrdersId", "ParfumesId");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("ParfumesId");
 
-                    b.ToTable("OrderProduct");
+                    b.ToTable("OrderParfume");
+                });
+
+            modelBuilder.Entity("CareOrder", b =>
+                {
+                    b.HasOne("Core.Entities.Care", null)
+                        .WithMany()
+                        .HasForeignKey("CaresId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Core.Entities.Order", null)
+                        .WithMany()
+                        .HasForeignKey("OrdersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Core.Entities.Care", b =>
                 {
-                    b.HasBaseType("Core.Entities.Product");
+                    b.HasOne("Core.Entities.Amount", "Amount")
+                        .WithMany("Cares")
+                        .HasForeignKey("AmountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                    b.HasOne("Core.Entities.Brand", "Brand")
+                        .WithMany("Cares")
+                        .HasForeignKey("BrandId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.ToTable("Care", (string)null);
-                });
+                    b.Navigation("Amount");
 
-            modelBuilder.Entity("Core.Entities.Parfume", b =>
-                {
-                    b.HasBaseType("Core.Entities.Product");
-
-                    b.Property<bool>("IsBottling")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("ParfumeLeftMl")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.ToTable("Parfume", (string)null);
+                    b.Navigation("Brand");
                 });
 
             modelBuilder.Entity("Core.Entities.Order", b =>
@@ -400,16 +472,16 @@ namespace infrustructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Core.Entities.Product", b =>
+            modelBuilder.Entity("Core.Entities.Parfume", b =>
                 {
                     b.HasOne("Core.Entities.Amount", "Amount")
-                        .WithMany("Products")
+                        .WithMany("Parfumes")
                         .HasForeignKey("AmountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Core.Entities.Brand", "Brand")
-                        .WithMany("Products")
+                        .WithMany("Parfumes")
                         .HasForeignKey("BrandId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -421,11 +493,13 @@ namespace infrustructure.Migrations
 
             modelBuilder.Entity("Core.Entities.Rating", b =>
                 {
-                    b.HasOne("Core.Entities.Product", "Product")
+                    b.HasOne("Core.Entities.Care", "Care")
                         .WithMany("Ratings")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CareId");
+
+                    b.HasOne("Core.Entities.Parfume", "Parfume")
+                        .WithMany("Ratings")
+                        .HasForeignKey("ParfumeId");
 
                     b.HasOne("Core.Entities.User", "User")
                         .WithMany("Ratings")
@@ -433,7 +507,9 @@ namespace infrustructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Product");
+                    b.Navigation("Care");
+
+                    b.Navigation("Parfume");
 
                     b.Navigation("User");
                 });
@@ -489,7 +565,7 @@ namespace infrustructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("OrderProduct", b =>
+            modelBuilder.Entity("OrderParfume", b =>
                 {
                     b.HasOne("Core.Entities.Order", null)
                         .WithMany()
@@ -497,24 +573,33 @@ namespace infrustructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Core.Entities.Product", null)
+                    b.HasOne("Core.Entities.Parfume", null)
                         .WithMany()
-                        .HasForeignKey("ProductId")
+                        .HasForeignKey("ParfumesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("Core.Entities.Amount", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("Cares");
+
+                    b.Navigation("Parfumes");
                 });
 
             modelBuilder.Entity("Core.Entities.Brand", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("Cares");
+
+                    b.Navigation("Parfumes");
                 });
 
-            modelBuilder.Entity("Core.Entities.Product", b =>
+            modelBuilder.Entity("Core.Entities.Care", b =>
+                {
+                    b.Navigation("Ratings");
+                });
+
+            modelBuilder.Entity("Core.Entities.Parfume", b =>
                 {
                     b.Navigation("Ratings");
                 });
