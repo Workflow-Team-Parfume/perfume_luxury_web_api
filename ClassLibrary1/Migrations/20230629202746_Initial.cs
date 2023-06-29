@@ -11,9 +11,6 @@ namespace infrustructure.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateSequence(
-                name: "ProductSequence");
-
             migrationBuilder.CreateTable(
                 name: "Amounts",
                 columns: table => new
@@ -207,15 +204,126 @@ namespace infrustructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Cares",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Img_Path = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BrandId = table.Column<int>(type: "int", nullable: false),
+                    InStock = table.Column<bool>(type: "bit", nullable: false),
+                    AmountId = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cares", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Cares_Amounts_AmountId",
+                        column: x => x.AmountId,
+                        principalTable: "Amounts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Cares_Brands_BrandId",
+                        column: x => x.BrandId,
+                        principalTable: "Brands",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Parfumes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Img_Path = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BrandId = table.Column<int>(type: "int", nullable: false),
+                    InStock = table.Column<bool>(type: "bit", nullable: false),
+                    AmountId = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ParfumeLeftMl = table.Column<int>(type: "int", nullable: true),
+                    IsBottling = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Parfumes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Parfumes_Amounts_AmountId",
+                        column: x => x.AmountId,
+                        principalTable: "Amounts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Parfumes_Brands_BrandId",
+                        column: x => x.BrandId,
+                        principalTable: "Brands",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CareOrder",
+                columns: table => new
+                {
+                    CaresId = table.Column<int>(type: "int", nullable: false),
+                    OrdersId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CareOrder", x => new { x.CaresId, x.OrdersId });
+                    table.ForeignKey(
+                        name: "FK_CareOrder_Cares_CaresId",
+                        column: x => x.CaresId,
+                        principalTable: "Cares",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CareOrder_Orders_OrdersId",
+                        column: x => x.OrdersId,
+                        principalTable: "Orders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OrderParfume",
+                columns: table => new
+                {
+                    OrdersId = table.Column<int>(type: "int", nullable: false),
+                    ParfumesId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderParfume", x => new { x.OrdersId, x.ParfumesId });
+                    table.ForeignKey(
+                        name: "FK_OrderParfume_Orders_OrdersId",
+                        column: x => x.OrdersId,
+                        principalTable: "Orders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OrderParfume_Parfumes_ParfumesId",
+                        column: x => x.ParfumesId,
+                        principalTable: "Parfumes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Ratings",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    User_id = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    Product_Id = table.Column<int>(type: "int", nullable: false),
-                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CareId = table.Column<int>(type: "int", nullable: true),
+                    ParfumeId = table.Column<int>(type: "int", nullable: true),
                     Rate = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
@@ -225,91 +333,18 @@ namespace infrustructure.Migrations
                         name: "FK_Ratings_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Ratings_Cares_CareId",
+                        column: x => x.CareId,
+                        principalTable: "Cares",
                         principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Care",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR [ProductSequence]"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Img_Path = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Brand_id = table.Column<int>(type: "int", nullable: false),
-                    BrandId = table.Column<int>(type: "int", nullable: false),
-                    InStock = table.Column<bool>(type: "bit", nullable: false),
-                    Amount_Id = table.Column<int>(type: "int", nullable: false),
-                    AmountId = table.Column<int>(type: "int", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Care", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Care_Amounts_AmountId",
-                        column: x => x.AmountId,
-                        principalTable: "Amounts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Care_Brands_BrandId",
-                        column: x => x.BrandId,
-                        principalTable: "Brands",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Parfume",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR [ProductSequence]"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Img_Path = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Brand_id = table.Column<int>(type: "int", nullable: false),
-                    BrandId = table.Column<int>(type: "int", nullable: false),
-                    InStock = table.Column<bool>(type: "bit", nullable: false),
-                    Amount_Id = table.Column<int>(type: "int", nullable: false),
-                    AmountId = table.Column<int>(type: "int", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    ParfumeLeftMl = table.Column<int>(type: "int", nullable: false),
-                    IsBottling = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Parfume", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Parfume_Amounts_AmountId",
-                        column: x => x.AmountId,
-                        principalTable: "Amounts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Parfume_Brands_BrandId",
-                        column: x => x.BrandId,
-                        principalTable: "Brands",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "OrderProduct",
-                columns: table => new
-                {
-                    OrdersId = table.Column<int>(type: "int", nullable: false),
-                    ProductId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OrderProduct", x => new { x.OrdersId, x.ProductId });
-                    table.ForeignKey(
-                        name: "FK_OrderProduct_Orders_OrdersId",
-                        column: x => x.OrdersId,
-                        principalTable: "Orders",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Ratings_Parfumes_ParfumeId",
+                        column: x => x.ParfumeId,
+                        principalTable: "Parfumes",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -352,19 +387,24 @@ namespace infrustructure.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Care_AmountId",
-                table: "Care",
+                name: "IX_CareOrder_OrdersId",
+                table: "CareOrder",
+                column: "OrdersId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cares_AmountId",
+                table: "Cares",
                 column: "AmountId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Care_BrandId",
-                table: "Care",
+                name: "IX_Cares_BrandId",
+                table: "Cares",
                 column: "BrandId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderProduct_ProductId",
-                table: "OrderProduct",
-                column: "ProductId");
+                name: "IX_OrderParfume_ParfumesId",
+                table: "OrderParfume",
+                column: "ParfumesId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_UserId",
@@ -372,19 +412,24 @@ namespace infrustructure.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Parfume_AmountId",
-                table: "Parfume",
+                name: "IX_Parfumes_AmountId",
+                table: "Parfumes",
                 column: "AmountId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Parfume_BrandId",
-                table: "Parfume",
+                name: "IX_Parfumes_BrandId",
+                table: "Parfumes",
                 column: "BrandId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Ratings_ProductId",
+                name: "IX_Ratings_CareId",
                 table: "Ratings",
-                column: "ProductId");
+                column: "CareId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ratings_ParfumeId",
+                table: "Ratings",
+                column: "ParfumeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Ratings_UserId",
@@ -411,13 +456,10 @@ namespace infrustructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Care");
+                name: "CareOrder");
 
             migrationBuilder.DropTable(
-                name: "OrderProduct");
-
-            migrationBuilder.DropTable(
-                name: "Parfume");
+                name: "OrderParfume");
 
             migrationBuilder.DropTable(
                 name: "Ratings");
@@ -429,16 +471,19 @@ namespace infrustructure.Migrations
                 name: "Orders");
 
             migrationBuilder.DropTable(
-                name: "Amounts");
+                name: "Cares");
 
             migrationBuilder.DropTable(
-                name: "Brands");
+                name: "Parfumes");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
-            migrationBuilder.DropSequence(
-                name: "ProductSequence");
+            migrationBuilder.DropTable(
+                name: "Amounts");
+
+            migrationBuilder.DropTable(
+                name: "Brands");
         }
     }
 }

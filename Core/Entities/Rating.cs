@@ -11,8 +11,10 @@ namespace Core.Entities
         public int Id { get; set; }
         public string UserId { get; set; }
         public User User { get; set; }
-        public int ProductId { get; set; }
-        public Product Product { get; set; }
+        public Care? Care { get; set; }
+        public int? CareId { get; set; }
+        public Parfume? Parfume { get; set; }
+        public int? ParfumeId { get; set; }
         public decimal Rate{ get; set; }
     }
 }

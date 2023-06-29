@@ -13,6 +13,7 @@ namespace Core.Entities
         public decimal Total { get; set; }
         public string UserId { get; set; }
         public User User { get; set; }
-        public ICollection<Product>? Product { get; set; }
+        public ICollection<Care>? Cares { get; set; }
+        public ICollection<Parfume>? Parfumes { get; set; }
     }
 }

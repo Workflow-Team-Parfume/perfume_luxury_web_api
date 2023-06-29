@@ -10,6 +10,7 @@ namespace Core.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public ICollection<Product>? Products { get; set; }
+        public ICollection<Care>? Cares { get; set; }
+        public ICollection<Parfume>? Parfumes { get; set; }
     }
 }
