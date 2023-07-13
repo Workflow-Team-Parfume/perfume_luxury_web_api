@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ClassLibrary1\infrustructure.csproj" />
+    <ProjectReference Include="..\Core\Core.csproj" />
   </ItemGroup>
 
 </Project>
