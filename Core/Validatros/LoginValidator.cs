@@ -18,9 +18,6 @@ namespace Core.Validatros
 
             RuleFor(x => x.Password)
                 .NotEmpty();
-               
-
-
         }
     }
 }
