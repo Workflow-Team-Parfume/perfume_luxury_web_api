@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Core.Entities
 {
-    public class User : IdentityUser
+    public class UserEntity : IdentityUser
     {
         public ICollection<Rating>? Ratings { get; set; }
         public ICollection<Order>? Orders { get; set; }

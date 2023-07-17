@@ -10,7 +10,7 @@ namespace Core.Entities
     {
         public int Id { get; set; }
         public string UserId { get; set; }
-        public User User { get; set; }
+        public UserEntity User { get; set; }
         public Care? Care { get; set; }
         public int? CareId { get; set; }
         public Parfume? Parfume { get; set; }
