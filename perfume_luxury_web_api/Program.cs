@@ -4,7 +4,7 @@ using perfume_luxury_web_api;
 
 var builder = WebApplication.CreateBuilder(args);
 
-string connStr = builder.Configuration.GetConnectionString("LocalDb");
+string connStr = builder.Configuration.GetConnectionString("RemoteDb");
 
 // Add services to the container.
 
