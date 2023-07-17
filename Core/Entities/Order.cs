@@ -12,7 +12,7 @@ namespace Core.Entities
         public DateTime Date { get; set; }
         public decimal Total { get; set; }
         public string UserId { get; set; }
-        public User User { get; set; }
+        public UserEntity User { get; set; }
         public ICollection<Care>? Cares { get; set; }
         public ICollection<Parfume>? Parfumes { get; set; }
     }

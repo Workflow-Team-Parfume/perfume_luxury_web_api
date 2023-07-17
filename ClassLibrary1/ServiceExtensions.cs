@@ -1,4 +1,5 @@
 ﻿using Core;
+using Core.Entities;
 using Core.Interfaces;
 using Infrustructure.Data;
 using Microsoft.AspNetCore.Identity;
@@ -20,11 +21,11 @@ namespace Infrustructure
         }
         public static void AddDbContext(this IServiceCollection services, string connStr)
         {
-            services.AddDbContext<RecipeDbContext>(opt => opt.UseSqlServer(connStr));
+            services.AddDbContext<RecipeDbContext>(opt => opt.UseNpgsql(connStr));
         }
         public static void AddIdentity(this IServiceCollection services)
         {
-            services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddIdentity<UserEntity, IdentityRole>()
                 .AddEntityFrameworkStores<RecipeDbContext>()
                 .AddDefaultTokenProviders();
         }

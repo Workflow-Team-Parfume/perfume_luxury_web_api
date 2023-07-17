@@ -19,8 +19,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext(connStr);
 builder.Services.AddIdentity();
 
-builder.Services.AddRepository();
-builder.Services.AddCustomServices();
+//builder.Services.AddRepository();
+//builder.Services.AddCustomServices();
 
 // add auto mapper
 builder.Services.AddAutoMapper();
