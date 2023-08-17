@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace infrustructure.Migrations
 {
-    [DbContext(typeof(RecipeDbContext))]
+    [DbContext(typeof(PerfumeDbContext))]
     partial class RecipeDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

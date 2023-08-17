@@ -7,9 +7,9 @@ using System.Reflection.Emit;
 
 namespace Infrustructure.Data
 {
-    public class RecipeDbContext : IdentityDbContext<UserEntity>
+    public class PerfumeDbContext : IdentityDbContext<UserEntity>
     {
-        public RecipeDbContext(DbContextOptions options) : base(options) { }
+        public PerfumeDbContext(DbContextOptions options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

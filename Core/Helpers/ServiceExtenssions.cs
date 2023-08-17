@@ -17,6 +17,7 @@ namespace Core.Helpers
         {
             services.AddScoped<IAccountsService, AccountsService>();
             services.AddScoped<IJwtService, JwtService>();
+            services.AddScoped<IRoleService, RoleService>();
 
         }
 

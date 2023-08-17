@@ -26,9 +26,9 @@ namespace Core.Validatros
             RuleFor(x => x.PhoneNumber)
                  .MinimumLength(2);
             
-            RuleFor(x => x.Location)
-                .NotEmpty()
-                .MinimumLength(2);
+            //RuleFor(x => x.Location)
+            //    .NotEmpty()
+            //    .MinimumLength(2);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Core.Dtos.User;
+using Core.Entities;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -10,11 +11,15 @@ namespace Core.Interfaces
 {
     public interface IAccountsService
     {
-        Task<IdentityUser> Get(string id);
+        Task<IEnumerable<GetUserDTO>> GetAll();
+        Task<GetUserDTO> Get(string id);
         Task<LoginResponseDto> Login(LoginDto dto);
         Task Register(RegisterDto dto);
         Task Logout();
+        Task Delete(string id);
+        Task Edit(string userId, EditUserDTO userDto);
+        Task<bool> CheckUsernameExists(string userName);
+        Task<bool> CheckEmailExists(string email);
 
-       
     }
 }

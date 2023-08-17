@@ -1,4 +1,5 @@
-﻿using Core.Helpers;
+﻿using Core.Entities;
+using Core.Helpers;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -38,7 +39,7 @@ namespace Core.Services
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public IEnumerable<Claim> GetClaims(IdentityUser user)
+        public IEnumerable<Claim> GetClaims(UserEntity user)
         {
             var claims = new List<Claim>
             {
