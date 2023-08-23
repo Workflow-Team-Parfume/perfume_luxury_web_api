@@ -12,7 +12,7 @@ namespace Core.Validatros
     {
         public LoginValidators()
         {
-            RuleFor(x => x.Username)
+            RuleFor(x => x.Email)
               .NotEmpty()
               .MinimumLength(2);
 

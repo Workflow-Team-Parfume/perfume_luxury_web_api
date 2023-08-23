@@ -83,7 +83,7 @@ namespace Core.Services
 
         public async Task<LoginResponseDto> Login(LoginDto dto)
         {
-            var user = await userManager.FindByNameAsync(dto.Username);
+            var user = await userManager.FindByEmailAsync(dto.Email);
 
             if (user == null || !await userManager.CheckPasswordAsync(user, dto.Password))
                 throw new HttpException(ErrorMessages.InvalidCreds, HttpStatusCode.BadRequest);

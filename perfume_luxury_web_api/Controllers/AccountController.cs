@@ -15,7 +15,11 @@ namespace perfume_luxury_web_api.Controllers
         {
             this.accountsService = accountsService;
         }
-
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            return Ok(await accountsService.GetAll());
+        }
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(string id)
         {
@@ -23,14 +27,14 @@ namespace perfume_luxury_web_api.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(RegisterDto dto)
+        public async Task<IActionResult> Register([FromBody] RegisterDto dto)
         {
             await accountsService.Register(dto);
             return Ok();
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginDto dto)
+        public async Task<IActionResult> Login([FromBody] LoginDto dto)
         {
             var response = await accountsService.Login(dto);
             return Ok(response);
@@ -41,6 +45,28 @@ namespace perfume_luxury_web_api.Controllers
         {
             await accountsService.Logout();
             return Ok();
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] string id)
+        {
+            await accountsService.Delete(id);
+            return Ok();
+        }
+        [HttpPut("{userId}")]
+        public async Task<IActionResult> Edit(string userId, [FromForm] EditUserDTO user)
+        {
+            await accountsService.Edit(userId, user);
+            return Ok();
+        }
+        [HttpGet("checkUsernameExists/{userName}")]
+        public async Task<IActionResult> CheckUsernameExists([FromRoute] string userName)
+        {
+            return Ok(await accountsService.CheckUsernameExists(userName));
+        }
+        [HttpGet("checkEmailExists/{email}")]
+        public async Task<IActionResult> CheckEmailExists([FromRoute] string email)
+        {
+            return Ok(await accountsService.CheckEmailExists(email));
         }
     }
 }
