@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
-using Core.Dtos;
-//using Core.Entities;
+using Core.Dtos.Amount;
+using Core.Dtos.Brand;
+using Core.Dtos.Parfume;
+using Core.Dtos.Perfume;
+using Core.Entities;
 using System.Drawing;
 
 namespace Core.MapperProfiles
@@ -9,13 +12,15 @@ namespace Core.MapperProfiles
     {
         public ApplicationProfile()
         {
-            //CreateMap<Ingredient, IngredientDto>().ReverseMap();
-            //CreateMap<DescriptionStep, DescriptionStepDto>().ReverseMap();
+            CreateMap<Brand, BrandDTO>().ReverseMap();
+            CreateMap<Brand, CreateBrandDTO>().ReverseMap();
 
-            //CreateMap<Recipe, RecipeDto>()
-            //    .ForMember(x => x.Ingredients, opt => opt.MapFrom(x => x.Ingredients.Select(i => i.Ingredient)));
+            CreateMap<Amount, AmountDTO>().ReverseMap();
+            CreateMap<Amount, CreateAmountDTO>().ReverseMap();
 
-            //CreateMap<RecipeDto, Recipe>();
+            CreateMap<PerfumeDTO, Parfume>().ReverseMap();
+            CreateMap<CreatePerfumeDTO, Parfume>().ReverseMap();
+            CreateMap<EditPerfumeDTO, Parfume>().ReverseMap();
         }
     }
 }
