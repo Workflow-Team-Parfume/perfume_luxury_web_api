@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Dtos.Parfume
+namespace Core.Dtos.Amount
 {
-    internal class CreateParfume
+    public class CreateAmountDTO
     {
+        public int Mililitters { get; set; }
     }
 }

@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Interfaces
+namespace Core.Dtos.Brand
 {
-    internal interface IParfumeService
+    public class CreateBrandDTO
     {
+        public string Name { get; set; }
     }
 }
