@@ -23,6 +23,7 @@ builder.Services.AddDbContext(connStr);
 builder.Services.AddIdentity();
 
 builder.Services.AddRepository();
+builder.Services.AddCustomServices();
 
 //add custom services
 builder.Services.AddCustomServices();
