@@ -1,4 +1,5 @@
-﻿using Core.Entities;
+﻿using Core.Configurations;
+using Core.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace Infrustructure.Data
             base.OnModelCreating(modelBuilder);
 
             // ----------- Set Configurations -----------
-            //modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            modelBuilder.ApplyConfiguration(new UserConfigurations());
         }
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{
