@@ -11,19 +11,26 @@ string connStr = builder.Configuration.GetConnectionString("RemoteDb");
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
+// add JWT tokens
 builder.Services.AddJWT(builder.Configuration);
 
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext(connStr);
+
 builder.Services.AddIdentity();
 
 builder.Services.AddRepository();
 builder.Services.AddCustomServices();
 
+//add custom services
+builder.Services.AddCustomServices();
+
 // add auto mapper
 builder.Services.AddAutoMapper();
+
 // add fluent validators
 builder.Services.AddValidators();
 
@@ -38,7 +45,16 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors(options =>
+{
+    options.AllowAnyHeader();
+    options.AllowAnyMethod();
+    options.AllowAnyOrigin();
+});
+
 app.UseAuthorization();
+
+app.UseAuthentication();
 
 app.MapControllers();
 

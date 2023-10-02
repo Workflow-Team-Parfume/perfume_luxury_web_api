@@ -1,4 +1,5 @@
-﻿using Core.Helpers;
+﻿using Core.Entities;
+using Core.Helpers;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -38,12 +39,15 @@ namespace Core.Services
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public IEnumerable<Claim> GetClaims(IdentityUser user)
+        public IEnumerable<Claim> GetClaims(UserEntity user)
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, user.Id),
-                new Claim(ClaimTypes.Name, user.UserName),
+                new Claim(CustomClaimTypes.id, user.Id),
+                new Claim(CustomClaimTypes.userName, user.UserName),
+                new Claim(CustomClaimTypes.email, user.Email),
+                new Claim(CustomClaimTypes.profilePicture, user.ProfilePicture ?? ""),
+                new Claim(CustomClaimTypes.registrationDate, user.RegistrationDate.ToString())
             };
 
             //var roles = userManager.GetRolesAsync(user).Result;
@@ -51,5 +55,14 @@ namespace Core.Services
 
             return claims;
         }
+    }
+    public static class CustomClaimTypes
+    {
+        public const string id = "id";
+        public const string userName = "userName";
+        public const string email = "email";
+        public const string roles = "roles";
+        public const string profilePicture = "profilePicture";
+        public const string registrationDate = "registrationDate";
     }
 }

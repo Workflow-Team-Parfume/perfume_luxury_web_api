@@ -13,15 +13,15 @@ namespace Core.Dtos.User
         public string Email { get; set; }
         public string? PhoneNumber { get; set; }
         public string Password { get; set; }
+        public string PasswordConfirmation { get; set; }
 
-        [EnumDataType(typeof(Gender))]
-        public Gender Gender { get; set; }
+        //[EnumDataType(typeof(Gender))]
+        //public Gender Gender { get; set; }
 
-        public string Location { get; set; }
     }
-    public enum Gender
-    {
-        Male = 1,
-        Female = 2
-    }
+    //public enum Gender
+    //{
+    //    Male = 1,
+    //    Female = 2
+    //}
 }

@@ -14,10 +14,10 @@ namespace Infrustructure
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        internal RecipeDbContext context;
+        internal PerfumeDbContext context;
         internal DbSet<TEntity> dbSet;
 
-        public Repository(RecipeDbContext context)
+        public Repository(PerfumeDbContext context)
         {
             this.context = context;
             this.dbSet = context.Set<TEntity>();

@@ -1,4 +1,5 @@
-﻿using Core.Entities;
+﻿using Core.Configurations;
+using Core.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -7,16 +8,16 @@ using System.Reflection.Emit;
 
 namespace Infrustructure.Data
 {
-    public class RecipeDbContext : IdentityDbContext<UserEntity>
+    public class PerfumeDbContext : IdentityDbContext<UserEntity>
     {
-        public RecipeDbContext(DbContextOptions options) : base(options) { }
+        public PerfumeDbContext(DbContextOptions options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             // ----------- Set Configurations -----------
-            //modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            modelBuilder.ApplyConfiguration(new UserConfigurations());
         }
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{

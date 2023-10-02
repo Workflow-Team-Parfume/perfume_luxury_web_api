@@ -72,11 +72,6 @@ namespace Core.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Recipe with requested id not found!.
         /// </summary>
-        internal static string RecipeNotFound {
-            get {
-                return ResourceManager.GetString("RecipeNotFound", resourceCulture);
-            }
-        }
         
         /// <summary>
         ///   Looks up a localized string similar to User with requested id not found!.

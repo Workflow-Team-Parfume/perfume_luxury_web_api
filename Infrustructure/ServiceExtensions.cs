@@ -21,13 +21,14 @@ namespace Infrustructure
         }
         public static void AddDbContext(this IServiceCollection services, string connStr)
         {
-            services.AddDbContext<RecipeDbContext>(opt => opt.UseNpgsql(connStr));
+            services.AddDbContext<PerfumeDbContext>(opt => opt.UseNpgsql(connStr));
         }
         public static void AddIdentity(this IServiceCollection services)
         {
             services.AddIdentity<UserEntity, IdentityRole>()
-                .AddEntityFrameworkStores<RecipeDbContext>()
+                .AddEntityFrameworkStores<PerfumeDbContext>()
                 .AddDefaultTokenProviders();
+
         }
     }
 }
