@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Entities
+namespace Core.Dtos.Category
 {
-    internal class Care
+    public class CategoryDTO
     {
+        public int Id { get; set; }
+
+        public string Name;
     }
 }

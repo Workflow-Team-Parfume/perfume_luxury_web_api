@@ -5,7 +5,7 @@ VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "perfume_luxury_web_api", "perfume_luxury_web_api\perfume_luxury_web_api.csproj", "{1F4E6834-8E58-48A4-9C52-C4076E4E2BA3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "infrustructure", "Infrustructure\infrustructure.csproj", "{B67CC50B-7678-422A-949D-CEF1271C83FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrustructure", "Infrustructure\Infrustructure.csproj", "{B67CC50B-7678-422A-949D-CEF1271C83FB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{79788647-0648-4B25-9D9D-384D061F1820}"
 EndProject
