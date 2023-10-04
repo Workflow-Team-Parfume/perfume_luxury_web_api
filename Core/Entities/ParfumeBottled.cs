@@ -15,6 +15,8 @@ namespace Core.Entities
         public decimal PricePerMl { get; set; }
 
         public int ProductId { get; set; }
+
         public ProductEntity Product { get; set; }
+        //add minus ml obj with date and order
     }
 }

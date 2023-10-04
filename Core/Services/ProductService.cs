@@ -40,14 +40,14 @@ namespace Core.Services
 
         public async Task<IEnumerable<ProductDTO>> Get()
         {
-            var result = await perfumeService.GetListBySpec(new Perfumes.GetAll());
+            var result = await perfumeService.GetListBySpec(new Product.GetAll());
 
             return mapper.Map<IEnumerable<ProductDTO>>(result);
         }
 
         public async Task<ProductDTO?> GetById(int id)
         {
-            ProductEntity? perfume = await perfumeService.GetItemBySpec(new Perfumes.GetById(id));
+            ProductEntity? perfume = await perfumeService.GetItemBySpec(new Product.GetById(id));
 
             if (perfume == null)
                 throw new Exception();

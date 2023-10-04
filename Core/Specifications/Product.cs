@@ -3,15 +3,14 @@ using Core.Entities;
 
 namespace Core.Specifications
 {
-    public static class Perfumes
+    public static class Product
     {
         public class GetAll : Specification<ProductEntity>
         {
             public GetAll()
             {
                 Query
-                    .Include(x => x.Brand)
-                    .Include(x => x.Amount);
+                    .Include(x => x.Brand);
             }
         }
         public class GetById : Specification<ProductEntity>
@@ -20,8 +19,7 @@ namespace Core.Specifications
             {
                 Query
                     .Where(x => x.Id == id)
-                    .Include(x => x.Brand)
-                    .Include(x => x.Amount);
+                    .Include(x => x.Brand);
             }
         }
     }

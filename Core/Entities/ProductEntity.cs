@@ -15,13 +15,9 @@ public class ProductEntity
 
     public string? Description { get; set; }
 
-    public int? ParfumeLeftMl { get; set; }
-
-    public int InStock { get; set; }
-
     public string ImgPath { get; set; }
 
-    public decimal Price { get; set; }
+    public bool Active { get; set; }
 
     public int BrandId { get; set; }
 
@@ -29,15 +25,17 @@ public class ProductEntity
 
     public ICollection<Rating>? Ratings { get; set; }
 
-    public int AmountId { get; set; }
-
-    public Amount? Amount { get; set; }
-
     public ICollection<Order>? Orders { get; set; }
 
     public int CategoryId { get; set; }
 
     public Category Category { get; set; }
+
+    public Care? Care { get; set; }
+
+    public Parfume? Parfume { get; set; }
+
+    public ParfumeBottled? ParfumeBottled { get; set; }
 
 
 }

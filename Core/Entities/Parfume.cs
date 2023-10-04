@@ -10,11 +10,6 @@ namespace Core.Entities
     {
         public int Id { get; set; }
 
-        public int? InStock { get; set; }
-        public bool Bottled { get; set; }
-
-        public int? LeftMl { get; set; }
-
         public int ProductId { get; set; }
         public ProductEntity Product { get; set; }
 
