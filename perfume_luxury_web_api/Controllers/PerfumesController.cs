@@ -11,9 +11,9 @@ namespace perfume_luxury_web_api.Controllers
     [ApiController]
     public class PerfumesController : Controller
     {
-        private readonly IPerfumeService perfumeService;
+        private readonly IProductService perfumeService;
 
-        public PerfumesController(IPerfumeService perfumeService)
+        public PerfumesController(IProductService perfumeService)
         {
             this.perfumeService = perfumeService;
         }
@@ -32,7 +32,7 @@ namespace perfume_luxury_web_api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromForm] CreatePerfumeDTO perfume)
+        public async Task<IActionResult> Create([FromForm] CreateProductDTO perfume)
         {
             if (!ModelState.IsValid) return BadRequest();
 
@@ -50,7 +50,7 @@ namespace perfume_luxury_web_api.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Edit([FromBody] EditPerfumeDTO perfume)
+        public async Task<IActionResult> Edit([FromBody] EditProductDTO perfume)
         {
             if (!ModelState.IsValid) return BadRequest();
 

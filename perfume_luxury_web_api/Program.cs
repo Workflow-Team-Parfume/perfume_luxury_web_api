@@ -1,6 +1,7 @@
 using Core.Helpers;
-using Infrustructure;
+using Core;
 using perfume_luxury_web_api;
+using Infrustructure;
 
 var builder = WebApplication.CreateBuilder(args);
 

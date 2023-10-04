@@ -1,17 +1,11 @@
 ﻿using Ardalis.Specification;
 using Core.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Core.Specifications
 {
     public static class Product
     {
-        public class GetAll : Specification<Parfume>
+        public class GetAll : Specification<ProductEntity>
         {
             public GetAll()
             {
@@ -19,7 +13,7 @@ namespace Core.Specifications
                     .Include(x => x.Brand);
             }
         }
-        public class GetById : Specification<Parfume>
+        public class GetById : Specification<ProductEntity>
         {
             public GetById(int id)
             {

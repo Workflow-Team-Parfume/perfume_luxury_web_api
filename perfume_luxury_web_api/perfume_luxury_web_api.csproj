@@ -19,7 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj" />
-    <ProjectReference Include="..\infrustructure\infrustructure.csproj" />
+    <ProjectReference Include="..\Infrustructure\Infrustructure.csproj" />
   </ItemGroup>
 
 </Project>

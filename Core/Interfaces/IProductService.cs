@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace Core.Interfaces
 {
-    public interface IPerfumeService
+    public interface IProductService
     {
-        Task<IEnumerable<PerfumeDTO>> Get();
-        Task<PerfumeDTO?> GetById(int id);
-        Task Create(CreatePerfumeDTO createPerfumeDTO);
-        Task Edit(EditPerfumeDTO perfumeDTO);
+        Task<IEnumerable<ProductDTO>> Get();
+        Task<ProductDTO?> GetById(int id);
+        Task Create(CreateProductDTO createPerfumeDTO);
+        Task Edit(EditProductDTO perfumeDTO);
         Task Delete(int id);
     }
 }

@@ -1,18 +1,12 @@
 ﻿using AutoMapper;
 using Core.Dtos.User;
-using Core.Entities;
 using Core.Helpers;
 using Core.Interfaces;
 using Core.Resources;
+using Core.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Core.Services
 {

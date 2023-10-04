@@ -7,22 +7,21 @@ using System.Text;
 using System.Threading.Tasks;
 using Core.Entities;
 
-namespace Core.Configurations
+namespace Core.Configurations;
+
+public class UserConfigurations : IEntityTypeConfiguration<UserEntity>
 {
-    public class UserConfigurations : IEntityTypeConfiguration<UserEntity>
+    public void Configure(EntityTypeBuilder<UserEntity> builder)
     {
-        public void Configure(EntityTypeBuilder<UserEntity> builder)
-        {
-            builder
-                .HasMany(u => u.Orders)
-                .WithOne(a => a.User)
-                .HasForeignKey(a => a.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
-            builder
-                .HasMany(user => user.Ratings)
-                .WithOne(rat => rat.User)
-                .HasForeignKey(a => a.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
-        }
+        builder
+            .HasMany(u => u.Orders)
+            .WithOne(a => a.User)
+            .HasForeignKey(a => a.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+        builder
+            .HasMany(user => user.Ratings)
+            .WithOne(rat => rat.User)
+            .HasForeignKey(a => a.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Core.Dtos.Brand;
 using Core.Dtos.Parfume;
-using Core.Entities;
 using Core.Interfaces;
 using Core.Specifications;
+using Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

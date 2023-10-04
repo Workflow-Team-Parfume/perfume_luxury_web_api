@@ -1,5 +1,4 @@
 ﻿using Core.Dtos.User;
-using Core.Entities;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
