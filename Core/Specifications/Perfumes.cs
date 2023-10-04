@@ -9,15 +9,14 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Core.Specifications
 {
-    public static class Perfumes
+    public static class Product
     {
         public class GetAll : Specification<Parfume>
         {
             public GetAll()
             {
                 Query
-                    .Include(x => x.Brand)
-                    .Include(x => x.Amount);
+                    .Include(x => x.Brand);
             }
         }
         public class GetById : Specification<Parfume>
@@ -26,8 +25,7 @@ namespace Core.Specifications
             {
                 Query
                     .Where(x => x.Id == id)
-                    .Include(x => x.Brand)
-                    .Include(x => x.Amount);
+                    .Include(x => x.Brand);
             }
         }
     }
