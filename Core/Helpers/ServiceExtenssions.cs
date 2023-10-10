@@ -15,7 +15,7 @@ namespace Core.Helpers
 
         public static void AddCustomServices(this IServiceCollection services)
         {
-            //services.AddScoped<IAccountsService, AccountsService>();
+            services.AddScoped<IAccountsService, AccountsService>();
             services.AddScoped<IJwtService, JwtService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IBrandService, BrandService>();

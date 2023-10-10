@@ -13,6 +13,7 @@ public class Amount
 
     public int Mililitters { get; set; }
 
-    public ICollection<ProductEntity> Products { get; set; }
+    public ICollection<ParfumePiece>? ParfumePieces { get; set; }
+    public ICollection<CarePiece>? CarePieces { get; set; }
 
 }
