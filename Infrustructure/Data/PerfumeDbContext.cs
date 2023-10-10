@@ -33,5 +33,10 @@ namespace Infrustructure.Data
         public DbSet<Rating> Ratings { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<ProductEntity> Products { get; set; }
+        public DbSet<Care> Cares { get; set; }
+        public DbSet<CarePiece> CarePieces { get; set; }
+        public DbSet<Parfume> Parfumes { get; set; }
+        public DbSet<ParfumePiece> ParfumePieces { get; set; }
+        public DbSet<ParfumeBottled> ParfumeBottleds { get; set; }
     }
 }
