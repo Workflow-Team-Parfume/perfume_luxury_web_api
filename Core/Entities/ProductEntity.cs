@@ -37,5 +37,4 @@ public class ProductEntity
 
     public ParfumeBottled? ParfumeBottled { get; set; }
 
-
 }

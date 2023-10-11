@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Core.Entities
 {
-    internal class Care
+    public class Care
     {
         public int Id { get; set; }
         public int ProductId { get; set; }

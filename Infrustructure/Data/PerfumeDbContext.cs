@@ -22,7 +22,7 @@ namespace Infrustructure.Data
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{
         //    base.OnConfiguring(optionsBuilder);
-        //    string connStr = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=PerfumeDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        //    string connStr = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ParfumeDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         //    optionsBuilder.UseSqlServer(connStr);
         //}
 
@@ -33,5 +33,10 @@ namespace Infrustructure.Data
         public DbSet<Rating> Ratings { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<ProductEntity> Products { get; set; }
+        public DbSet<Care> Cares { get; set; }
+        public DbSet<CarePiece> CarePieces { get; set; }
+        public DbSet<Parfume> Parfumes { get; set; }
+        public DbSet<ParfumePiece> ParfumePieces { get; set; }
+        public DbSet<ParfumeBottled> ParfumeBottleds { get; set; }
     }
 }

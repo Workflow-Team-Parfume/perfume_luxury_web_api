@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Dtos.Category
+namespace Core.Dtos.Parfume
 {
-    public class CreateCategoryDTO
+    public class CreateParfumeDTO
     {
-        public string Name { get; set; }
+        public int ProductId { get; set; }
     }
 }

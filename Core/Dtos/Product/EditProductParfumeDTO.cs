@@ -1,21 +1,21 @@
-﻿using Core.Dtos.Brand;
-using Core.Dtos.Category;
+﻿using Core.Dtos.ParfumePiece;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Dtos.Parfume
+namespace Core.Dtos.Product
 {
-    public class ProductDTO
+    public class EditProductParfumeDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string? Description { get; set; }
         public string ImgPath { get; set; }
         public bool Active { get; set; }
-        public BrandDTO Brand { get; set; }
-        public CategoryDTO Category { get; set; }
+        public int BrandId { get; set; }
+        public int CategoryId { get; set; }
+        public List<EditParfumePieceDTO> ParfumePieces { get; set; }
     }
 }

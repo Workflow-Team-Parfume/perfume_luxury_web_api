@@ -13,6 +13,6 @@ namespace Core.Entities
         public int ProductId { get; set; }
         public ProductEntity Product { get; set; }
 
-        public ICollection<ParfumePiece> ParfumePieces { get; set; }
+        public ICollection<ParfumePiece>? ParfumePieces { get; set; }
     }
 }

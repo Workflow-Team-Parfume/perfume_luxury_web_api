@@ -12,8 +12,8 @@ namespace Core.Interfaces
     {
         Task<IEnumerable<ProductDTO>> Get();
         Task<ProductDTO?> GetById(int id);
-        Task Create(CreateProductDTO createPerfumeDTO);
-        Task Edit(EditProductDTO perfumeDTO);
+        Task Create(CreateProductDTO createProductDTO);
+        Task Edit(EditProductDTO editProductDTO);
         Task Delete(int id);
     }
 }

@@ -9,50 +9,50 @@ namespace Core.Services
 {
     public class ProductService : IProductService
     {
-        private readonly IRepository<ProductEntity> perfumeService;
+        private readonly IRepository<ProductEntity> productRepository;
         private readonly IMapper mapper;
-        public ProductService(IRepository<ProductEntity> perfumeService, IMapper mapper)
+        public ProductService(IRepository<ProductEntity> productRepository, IMapper mapper)
         {
-            this.perfumeService = perfumeService;
+            this.productRepository = productRepository;
             this.mapper = mapper;
         }
 
-        public async Task Create(CreateProductDTO perfumeDto)
+        public async Task Create(CreateProductDTO createProductDTO)
         {
-            await perfumeService.Insert(mapper.Map<ProductEntity>(perfumeDto));
-            await perfumeService.Save();
+            await productRepository.Insert(mapper.Map<ProductEntity>(createProductDTO));
+            await productRepository.Save();
         }
 
         public async Task Delete(int id)
         {
-            if (await perfumeService.GetById(id) == null)
+            if (await productRepository.GetById(id) == null)
                 return;
 
-            await perfumeService.Delete(id);
-            await perfumeService.Save();
+            await productRepository.Delete(id);
+            await productRepository.Save();
         }
 
-        public async Task Edit(EditProductDTO perfume)
+        public async Task Edit(EditProductDTO editProductDTO)
         {
-            await perfumeService.Update(mapper.Map<ProductEntity>(perfume));
-            await perfumeService.Save();
+            await productRepository.Update(mapper.Map<ProductEntity>(editProductDTO));
+            await productRepository.Save();
         }
 
         public async Task<IEnumerable<ProductDTO>> Get()
         {
-            var result = await perfumeService.GetListBySpec(new Product.GetAll());
+            var result = await productRepository.GetListBySpec(new Products.GetAll());
 
             return mapper.Map<IEnumerable<ProductDTO>>(result);
         }
 
         public async Task<ProductDTO?> GetById(int id)
         {
-            ProductEntity? perfume = await perfumeService.GetItemBySpec(new Product.GetById(id));
+            ProductEntity? productDTO = await productRepository.GetItemBySpec(new Products.GetById(id));
 
-            if (perfume == null)
+            if (productDTO == null)
                 throw new Exception();
 
-            return mapper.Map<ProductDTO>(perfume);
+            return mapper.Map<ProductDTO>(productDTO);
         }
     }
 }

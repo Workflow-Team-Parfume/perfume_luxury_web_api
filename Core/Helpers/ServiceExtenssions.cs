@@ -21,7 +21,8 @@ namespace Core.Helpers
             services.AddScoped<IBrandService, BrandService>();
             services.AddScoped<IAmountService, AmountService>();
             services.AddScoped<IRoleService, RoleService>();
-
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IParfumeService, ParfumeService>();
         }
 
         public static void AddValidators(this IServiceCollection services)
