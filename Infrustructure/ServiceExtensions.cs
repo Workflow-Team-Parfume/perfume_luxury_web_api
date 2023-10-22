@@ -1,7 +1,7 @@
 ﻿using Core;
-using Core.Entities;
 using Core.Interfaces;
 using Infrustructure.Data;
+using Core.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

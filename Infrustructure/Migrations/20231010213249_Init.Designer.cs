@@ -9,11 +9,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace infrustructure.Migrations
+namespace Infrustructure.Migrations
 {
     [DbContext(typeof(PerfumeDbContext))]
-    [Migration("20230823125010_UserEdit")]
-    partial class UserEdit
+    [Migration("20231010213249_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,21 +24,6 @@ namespace infrustructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("CareOrder", b =>
-                {
-                    b.Property<int>("CaresId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("OrdersId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("CaresId", "OrdersId");
-
-                    b.HasIndex("OrdersId");
-
-                    b.ToTable("CareOrder");
-                });
 
             modelBuilder.Entity("Core.Entities.Amount", b =>
                 {
@@ -81,26 +66,33 @@ namespace infrustructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("ProductId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId")
+                        .IsUnique();
+
+                    b.ToTable("Cares");
+                });
+
+            modelBuilder.Entity("Core.Entities.CarePiece", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
                     b.Property<int>("AmountId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("BrandId")
+                    b.Property<int>("CareId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Img_Path")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<bool>("InStock")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int?>("InStock")
+                        .HasColumnType("integer");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("numeric");
@@ -109,9 +101,26 @@ namespace infrustructure.Migrations
 
                     b.HasIndex("AmountId");
 
-                    b.HasIndex("BrandId");
+                    b.HasIndex("CareId");
 
-                    b.ToTable("Cares");
+                    b.ToTable("CarePieces");
+                });
+
+            modelBuilder.Entity("Core.Entities.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("Core.Entities.Order", b =>
@@ -147,30 +156,57 @@ namespace infrustructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("ProductId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId")
+                        .IsUnique();
+
+                    b.ToTable("Parfumes");
+                });
+
+            modelBuilder.Entity("Core.Entities.ParfumeBottled", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("LeftMl")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("PricePerMl")
+                        .HasColumnType("numeric");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId")
+                        .IsUnique();
+
+                    b.ToTable("ParfumeBottleds");
+                });
+
+            modelBuilder.Entity("Core.Entities.ParfumePiece", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
                     b.Property<int>("AmountId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("BrandId")
+                    b.Property<int?>("InStock")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Img_Path")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<bool>("InStock")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsBottling")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int?>("ParfumeLeftMl")
+                    b.Property<int>("ParfumeId")
                         .HasColumnType("integer");
 
                     b.Property<decimal>("Price")
@@ -180,9 +216,46 @@ namespace infrustructure.Migrations
 
                     b.HasIndex("AmountId");
 
+                    b.HasIndex("ParfumeId");
+
+                    b.ToTable("ParfumePieces");
+                });
+
+            modelBuilder.Entity("Core.Entities.ProductEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("BrandId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ImgPath")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
                     b.HasIndex("BrandId");
 
-                    b.ToTable("Parfumes");
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("Core.Entities.Rating", b =>
@@ -193,10 +266,7 @@ namespace infrustructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CareId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("ParfumeId")
+                    b.Property<int?>("ProductId")
                         .HasColumnType("integer");
 
                     b.Property<decimal>("Rate")
@@ -208,9 +278,7 @@ namespace infrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CareId");
-
-                    b.HasIndex("ParfumeId");
+                    b.HasIndex("ProductId");
 
                     b.HasIndex("UserId");
 
@@ -419,53 +487,49 @@ namespace infrustructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("OrderParfume", b =>
+            modelBuilder.Entity("OrderProductEntity", b =>
                 {
                     b.Property<int>("OrdersId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("ParfumesId")
+                    b.Property<int>("ProductsId")
                         .HasColumnType("integer");
 
-                    b.HasKey("OrdersId", "ParfumesId");
+                    b.HasKey("OrdersId", "ProductsId");
 
-                    b.HasIndex("ParfumesId");
+                    b.HasIndex("ProductsId");
 
-                    b.ToTable("OrderParfume");
-                });
-
-            modelBuilder.Entity("CareOrder", b =>
-                {
-                    b.HasOne("Core.Entities.Care", null)
-                        .WithMany()
-                        .HasForeignKey("CaresId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Core.Entities.Order", null)
-                        .WithMany()
-                        .HasForeignKey("OrdersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.ToTable("OrderProductEntity");
                 });
 
             modelBuilder.Entity("Core.Entities.Care", b =>
                 {
+                    b.HasOne("Core.Entities.ProductEntity", "Product")
+                        .WithOne("Care")
+                        .HasForeignKey("Core.Entities.Care", "ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Core.Entities.CarePiece", b =>
+                {
                     b.HasOne("Core.Entities.Amount", "Amount")
-                        .WithMany("Cares")
+                        .WithMany("CarePieces")
                         .HasForeignKey("AmountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Core.Entities.Brand", "Brand")
-                        .WithMany("Cares")
-                        .HasForeignKey("BrandId")
+                    b.HasOne("Core.Entities.Care", "Care")
+                        .WithMany("CarePieces")
+                        .HasForeignKey("CareId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Amount");
 
-                    b.Navigation("Brand");
+                    b.Navigation("Care");
                 });
 
             modelBuilder.Entity("Core.Entities.Order", b =>
@@ -481,32 +545,69 @@ namespace infrustructure.Migrations
 
             modelBuilder.Entity("Core.Entities.Parfume", b =>
                 {
+                    b.HasOne("Core.Entities.ProductEntity", "Product")
+                        .WithOne("Parfume")
+                        .HasForeignKey("Core.Entities.Parfume", "ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Core.Entities.ParfumeBottled", b =>
+                {
+                    b.HasOne("Core.Entities.ProductEntity", "Product")
+                        .WithOne("ParfumeBottled")
+                        .HasForeignKey("Core.Entities.ParfumeBottled", "ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Core.Entities.ParfumePiece", b =>
+                {
                     b.HasOne("Core.Entities.Amount", "Amount")
-                        .WithMany("Parfumes")
+                        .WithMany("ParfumePieces")
                         .HasForeignKey("AmountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Core.Entities.Brand", "Brand")
-                        .WithMany("Parfumes")
-                        .HasForeignKey("BrandId")
+                    b.HasOne("Core.Entities.Parfume", "Parfume")
+                        .WithMany("ParfumePieces")
+                        .HasForeignKey("ParfumeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Amount");
 
+                    b.Navigation("Parfume");
+                });
+
+            modelBuilder.Entity("Core.Entities.ProductEntity", b =>
+                {
+                    b.HasOne("Core.Entities.Brand", "Brand")
+                        .WithMany("Products")
+                        .HasForeignKey("BrandId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Core.Entities.Category", "Category")
+                        .WithMany("Products")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Brand");
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Core.Entities.Rating", b =>
                 {
-                    b.HasOne("Core.Entities.Care", "Care")
+                    b.HasOne("Core.Entities.ProductEntity", "Product")
                         .WithMany("Ratings")
-                        .HasForeignKey("CareId");
-
-                    b.HasOne("Core.Entities.Parfume", "Parfume")
-                        .WithMany("Ratings")
-                        .HasForeignKey("ParfumeId");
+                        .HasForeignKey("ProductId");
 
                     b.HasOne("Core.Entities.UserEntity", "User")
                         .WithMany("Ratings")
@@ -514,9 +615,7 @@ namespace infrustructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Care");
-
-                    b.Navigation("Parfume");
+                    b.Navigation("Product");
 
                     b.Navigation("User");
                 });
@@ -572,7 +671,7 @@ namespace infrustructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("OrderParfume", b =>
+            modelBuilder.Entity("OrderProductEntity", b =>
                 {
                     b.HasOne("Core.Entities.Order", null)
                         .WithMany()
@@ -580,34 +679,48 @@ namespace infrustructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Core.Entities.Parfume", null)
+                    b.HasOne("Core.Entities.ProductEntity", null)
                         .WithMany()
-                        .HasForeignKey("ParfumesId")
+                        .HasForeignKey("ProductsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("Core.Entities.Amount", b =>
                 {
-                    b.Navigation("Cares");
+                    b.Navigation("CarePieces");
 
-                    b.Navigation("Parfumes");
+                    b.Navigation("ParfumePieces");
                 });
 
             modelBuilder.Entity("Core.Entities.Brand", b =>
                 {
-                    b.Navigation("Cares");
-
-                    b.Navigation("Parfumes");
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Core.Entities.Care", b =>
                 {
-                    b.Navigation("Ratings");
+                    b.Navigation("CarePieces");
+                });
+
+            modelBuilder.Entity("Core.Entities.Category", b =>
+                {
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Core.Entities.Parfume", b =>
                 {
+                    b.Navigation("ParfumePieces");
+                });
+
+            modelBuilder.Entity("Core.Entities.ProductEntity", b =>
+                {
+                    b.Navigation("Care");
+
+                    b.Navigation("Parfume");
+
+                    b.Navigation("ParfumeBottled");
+
                     b.Navigation("Ratings");
                 });
 
